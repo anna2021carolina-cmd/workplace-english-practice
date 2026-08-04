@@ -18,7 +18,13 @@ The interface reads `question-bank.json` at runtime. The file is intentionally s
 - `steps`: one or more guided exercises
 - `production`: final one-sentence recall exercise
 
-Supported guided step types are `choice`, `order`, and `fill`. Incorrect choice options must include an `errorType` and a short `feedback` explanation.
+Supported guided step types are `choice`, `order`, and `fill`. Every non-best choice must include an `errorType` and a short `feedback` explanation.
+
+Choice outcomes use three levels:
+
+- `correct: true`: the best answer for the stated situation
+- `correct: false` with `quality: "acceptable"`: valid English that is less natural, less complete, or less aligned with the stated intent; it gives feedback but is not saved as a mistake
+- `correct: false` without `quality: "acceptable"`: a genuine grammar, word-order, usage, or tone problem; it is saved for mistake review
 
 Supported error types are:
 
@@ -28,6 +34,7 @@ Supported error types are:
 - `unnatural`
 - `tone`
 - `usage`
+- `suboptimal`
 - `needs-review`
 
 The `production.accepted` array contains normalized answers that the static interface can safely accept. Known mistakes can be listed under `production.commonMistakes`. Any unmatched free-text answer is marked `needs-review` instead of being given an unreliable automatic diagnosis.
