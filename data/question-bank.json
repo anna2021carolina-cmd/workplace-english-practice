@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "bank": {
     "id": "workplace-english-core",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Workplace English Core",
     "description": "Generic business email and workplace phone scenarios without personal or industry-specific information."
   },
@@ -56,7 +56,7 @@
           "options": [
             { "text": "Could you please send the missing document by Friday?", "correct": true, "feedback": "Could you please 清楚表達請求，by Friday 表示最晚期限。" },
             { "text": "You must send me the missing document before Friday.", "correct": false, "errorType": "tone", "feedback": "must 和 send me 過於命令式；before Friday 也可能被理解為不包含星期五。" },
-            { "text": "Please supply me the lack document until Friday.", "correct": false, "errorType": "unnatural", "feedback": "lack document 不自然，until 也不適合表示繳交期限。" }
+            { "text": "Please supply me the lack document until Friday.", "correct": false, "errorType": "unnatural", "feedback": "lack document 不自然；supply 應使用 supply someone with something 或 supply something to someone；期限應使用 by Friday。" }
           ]
         },
         {
@@ -129,7 +129,7 @@
           "options": [
             { "text": "Could you please provide an update on the request?", "correct": true, "feedback": "provide an update on 是自然的進度詢問搭配。" },
             { "text": "Why haven't you finished the request?", "correct": false, "errorType": "tone", "feedback": "這句直接指責對方未完成，不適合作為一般進度詢問。" },
-            { "text": "Could you tell me the request progress?", "correct": false, "errorType": "unnatural", "feedback": "可以理解，但 an update on the request 更自然。" }
+            { "text": "Could you tell me the request progress?", "correct": false, "quality": "acceptable", "errorType": "suboptimal", "feedback": "句子可以理解並使用，但 an update on the request 更自然。" }
           ]
         },
         {
@@ -201,8 +201,8 @@
           "promptZh": "哪一句最自然地確認時間？",
           "options": [
             { "text": "Could you please confirm whether Tuesday at 10:00 a.m. works for you?", "correct": true, "feedback": "whether...works for you 是自然的時間確認方式。" },
-            { "text": "Please confirm Tuesday 10:00 a.m. is convenient or not.", "correct": false, "errorType": "word-order", "feedback": "直接把「是否方便」翻成 convenient or not，語序不自然。" },
-            { "text": "Can you attend Tuesday at 10:00 a.m.?", "correct": false, "errorType": "tone", "feedback": "不是錯句，但語氣較直接，也把情境限縮成出席。" }
+            { "text": "Please confirm Tuesday 10:00 a.m. is convenient or not.", "correct": false, "errorType": "word-order", "feedback": "時間前缺少 at；直接把「是否方便」翻成 convenient or not，語序也不自然。" },
+            { "text": "Can you attend Tuesday at 10:00 a.m.?", "correct": false, "quality": "acceptable", "errorType": "suboptimal", "feedback": "句子可以使用，但語氣較直接，也把原本的確認方便時間限縮成是否出席。" }
           ]
         },
         {
@@ -240,7 +240,7 @@
           "options": [
             { "text": "Good morning. Thank you for calling. How may I help you?", "correct": true, "feedback": "包含問候、感謝與協助問題，適合一般工作電話。" },
             { "text": "Hello, what do you want?", "correct": false, "errorType": "tone", "feedback": "what do you want 過於直接，聽起來不耐煩。" },
-            { "text": "Good morning. How can I help?", "correct": false, "errorType": "unnatural", "feedback": "可以使用，但加上 Thank you for calling 更完整。" }
+            { "text": "Good morning. How can I help?", "correct": false, "quality": "acceptable", "errorType": "suboptimal", "feedback": "句子可以使用，但加上 Thank you for calling 會更完整。" }
           ]
         },
         {
@@ -275,7 +275,7 @@
           "options": [
             { "text": "May I have your name and company name, please?", "correct": true, "feedback": "May I have...please 是常見且禮貌的電話用語。" },
             { "text": "Who are you and where are you from?", "correct": false, "errorType": "tone", "feedback": "語氣像質問，而且 where are you from 不等於公司名稱。" },
-            { "text": "Can you give me your name and your company?", "correct": false, "errorType": "unnatural", "feedback": "可以理解，但 May I have... 更符合電話接待語氣。" }
+            { "text": "Can you give me your name and your company?", "correct": false, "quality": "acceptable", "errorType": "suboptimal", "feedback": "句子可以理解並使用，但 May I have... 更符合電話接待語氣。" }
           ]
         },
         {
@@ -292,7 +292,7 @@
       "production": {
         "promptZh": "寫一句禮貌詢問姓名與公司。",
         "target": "May I have your name and company name, please?",
-        "accepted": ["May I have your name and company name, please?", "Could I have your name and company name, please?"],
+        "accepted": ["May I have your name and company name, please?", "Could I have your name and company name, please?", "May I have your name and company, please?", "Could I have your name and company, please?"],
         "explanation": "可把這句當作固定電話句型，不必臨時組句。",
         "commonMistakes": [
           { "example": "Who are you and what is your company?", "errorType": "tone", "feedback": "改用 May I have... 可以避免質問感。" }
@@ -357,9 +357,9 @@
           "before": "I'll",
           "after": "you to the appropriate person.",
           "answers": ["transfer"],
-          "errorType": "spelling",
+          "errorType": "usage",
           "explanation": "transfer someone to... 表示把某人的電話轉接給另一方。",
-          "incorrectFeedback": "此處使用 transfer；注意拼字中間有兩個 r。"
+          "incorrectFeedback": "此處使用 transfer，表示把來電者轉接給另一方。"
         }
       ],
       "production": {
@@ -430,7 +430,7 @@
           "before": "Let me",
           "after": "your phone number.",
           "answers": ["confirm"],
-          "errorType": "spelling",
+          "errorType": "usage",
           "explanation": "confirm information 表示確認資訊是否正確。",
           "incorrectFeedback": "此處使用 confirm。"
         }
@@ -514,7 +514,7 @@
         "accepted": ["I'm sorry, I didn't catch that. Could you please repeat it?", "Sorry, I didn't catch that. Could you please repeat it?", "I'm sorry, could you please repeat that?"],
         "explanation": "這句值得整組背熟；卡住時不需要重新組合文法。",
         "commonMistakes": [
-          { "example": "Sorry, I didn't listen clearly. Please say again.", "errorType": "unnatural", "feedback": "改用 I didn't catch that 與 repeat it 更自然。" }
+          { "example": "Sorry, I didn't listen clearly. Please say again.", "errorType": "grammar", "feedback": "say 後缺少受詞；可說 Please say it again，電話中使用 I didn't catch that 與 Could you please repeat it? 更自然。" }
         ]
       }
     }
