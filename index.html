@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f0e7">
+    <meta name="robots" content="noindex, nofollow">
+    <meta
+      name="description"
+      content="A personal workplace English practice tool for business emails and basic phone calls."
+    >
+    <title>Workplace English Practice</title>
+    <link rel="stylesheet" href="./assets/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
+
+    <header class="site-header">
+      <button class="brand-button" id="home-button" type="button" aria-label="回到首頁">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span>
+          <strong>Workplace English</strong>
+          <small>Practice by doing</small>
+        </span>
+      </button>
+      <button class="icon-button" id="menu-button" type="button" aria-expanded="false" aria-controls="utility-menu">
+        <span aria-hidden="true">•••</span>
+        <span class="sr-only">開啟工具選單</span>
+      </button>
+      <nav class="utility-menu" id="utility-menu" hidden aria-label="學習工具">
+        <button type="button" data-action="show-mistakes">錯題重練</button>
+        <button type="button" data-action="show-phrases">收藏句型</button>
+        <button type="button" data-action="export">匯出 AI 參照紀錄</button>
+        <button class="danger-text" type="button" data-action="reset">清除本機紀錄</button>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <section class="screen home-screen" id="home-screen" aria-labelledby="home-title">
+        <div class="hero-copy">
+          <p class="eyebrow">15 分鐘也能開始</p>
+          <h1 id="home-title">把工作英文<br>練成能直接使用的句子。</h1>
+          <p class="hero-description">
+            從選擇、排序與填空開始，最後不看答案重建一句英文。所有學習紀錄只存在這個瀏覽器。
+          </p>
+        </div>
+
+        <div class="mode-grid" role="group" aria-label="選擇練習模式">
+          <article class="mode-card email-card">
+            <div class="mode-icon" aria-hidden="true">✉</div>
+            <p class="mode-label">EMAIL</p>
+            <h2>商務 Email</h2>
+            <p>確認、補件、附件、進度、更正與時間安排。</p>
+            <div class="mode-meta">
+              <span id="email-progress">尚未開始</span>
+              <span>每輪 3 個情境</span>
+            </div>
+            <button class="primary-button" type="button" data-start-mode="email">開始 Email 練習</button>
+          </article>
+
+          <article class="mode-card phone-card">
+            <div class="mode-icon" aria-hidden="true">☎</div>
+            <p class="mode-label">PHONE</p>
+            <h2>工作電話</h2>
+            <p>接聽、轉接、留言、確認資訊與卡住時的救援句。</p>
+            <div class="mode-meta">
+              <span id="phone-progress">尚未開始</span>
+              <span>每輪 3 個情境</span>
+            </div>
+            <button class="primary-button" type="button" data-start-mode="phone">開始電話練習</button>
+          </article>
+        </div>
+
+        <section class="privacy-note" id="storage-note" aria-label="隱私說明">
+          <span aria-hidden="true">●</span>
+          <p><strong>本機優先：</strong>不需登入、不連接 AI，也不會自動上傳你的答案。</p>
+        </section>
+      </section>
+
+      <section class="screen practice-screen" id="practice-screen" hidden aria-live="polite">
+        <div class="practice-topbar">
+          <button class="text-button" id="exit-practice" type="button">← 結束本輪</button>
+          <div class="progress-copy">
+            <span id="progress-label">情境 1 / 3</span>
+            <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+          </div>
+        </div>
+        <div id="practice-content"></div>
+      </section>
+
+      <section class="screen library-screen" id="library-screen" hidden>
+        <div class="library-heading">
+          <button class="text-button" type="button" data-action="home">← 回到首頁</button>
+          <p class="eyebrow" id="library-eyebrow">REVIEW</p>
+          <h1 id="library-title">錯題重練</h1>
+          <p id="library-description"></p>
+        </div>
+        <div class="library-list" id="library-list"></div>
+      </section>
+
+      <section class="screen summary-screen" id="summary-screen" hidden>
+        <div class="summary-card">
+          <p class="eyebrow">ROUND COMPLETE</p>
+          <h1>這一輪完成了。</h1>
+          <div class="summary-stats" id="summary-stats"></div>
+          <p class="summary-note" id="summary-note"></p>
+          <div class="button-stack">
+            <button class="primary-button" id="continue-mode" type="button">再練一輪</button>
+            <button class="secondary-button" type="button" data-action="show-mistakes">查看錯題</button>
+            <button class="text-button centered" type="button" data-action="home">回到首頁</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen error-screen" id="error-screen" hidden role="alert">
+        <div class="summary-card error-card">
+          <p class="eyebrow">QUESTION BANK ERROR</p>
+          <h1>題庫目前無法使用。</h1>
+          <p id="error-message">請確認題庫檔案是否完整。</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="confirm-dialog">
+      <form method="dialog">
+        <p class="eyebrow">CLEAR LOCAL DATA</p>
+        <h2>確定清除所有學習紀錄？</h2>
+        <p>錯題、收藏句型與作答紀錄都會從這個瀏覽器移除，而且無法復原。</p>
+        <div class="dialog-actions">
+          <button class="secondary-button" type="submit" value="cancel">取消</button>
+          <button class="danger-button" id="confirm-reset" type="submit" value="confirm">確定清除</button>
+        </div>
+      </form>
+    </dialog>
+
+    <noscript>這個學習工具需要 JavaScript 才能運作。</noscript>
+    <script src="./assets/app.js" defer></script>
+  </body>
+</html>
