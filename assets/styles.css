@@ -515,6 +515,11 @@ h1 {
   border-color: var(--sage);
 }
 
+.option-button.acceptable {
+  background: var(--amber-soft);
+  border-color: var(--amber);
+}
+
 .option-button.incorrect {
   background: var(--red-soft);
   border-color: var(--red);
@@ -603,6 +608,11 @@ h1 {
 .feedback-box.error {
   border-color: var(--red);
   background: var(--red-soft);
+}
+
+.feedback-box.acceptable {
+  border-color: var(--amber);
+  background: var(--amber-soft);
 }
 
 .feedback-box h3 {
