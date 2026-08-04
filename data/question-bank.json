@@ -1,0 +1,522 @@
+{
+  "schemaVersion": 1,
+  "bank": {
+    "id": "workplace-english-core",
+    "version": "1.0.0",
+    "title": "Workplace English Core",
+    "description": "Generic business email and workplace phone scenarios without personal or industry-specific information."
+  },
+  "items": [
+    {
+      "id": "email-confirm-receipt-01",
+      "mode": "email",
+      "category": "confirm-receipt",
+      "title": "確認收到資料",
+      "scenarioZh": "對方寄來你先前要求的資料。你要簡短確認已收到，不需要加入其他承諾。",
+      "facts": ["資料已完整收到", "保持簡短、禮貌", "不承諾完成時間"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最適合直接確認收件？",
+          "options": [
+            { "text": "Thank you. I have received the documents.", "correct": true, "feedback": "現在完成式能自然表達資料已經收到。" },
+            { "text": "I receive the documents, thank you.", "correct": false, "errorType": "grammar", "feedback": "receive 使用現在簡單式，不能自然表達剛完成的收件結果。" },
+            { "text": "The documents I already received.", "correct": false, "errorType": "word-order", "feedback": "這是直接套用中文語序；英文通常以主詞 I 開始。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "依英文語序重組確認句。",
+          "tokens": ["I", "have received", "the documents."],
+          "explanation": "主詞 I 後接 have received，再放受詞 the documents。",
+          "incorrectFeedback": "英文基本順序是主詞＋動詞＋受詞。"
+        }
+      ],
+      "production": {
+        "promptZh": "不看答案，寫一句「謝謝，我已收到資料」。",
+        "target": "Thank you. I have received the documents.",
+        "accepted": ["Thank you. I have received the documents.", "Thank you, I have received the documents.", "I have received the documents. Thank you."],
+        "explanation": "句子簡短、清楚，也沒有加入不必要的承諾。",
+        "commonMistakes": [
+          { "example": "I receive the documents, thank you.", "errorType": "grammar", "feedback": "改用 have received 表達已完成的收件結果。" }
+        ]
+      }
+    },
+    {
+      "id": "email-request-missing-01",
+      "mode": "email",
+      "category": "request-missing-document",
+      "title": "請對方補件",
+      "scenarioZh": "收到的資料缺少一份文件。你需要禮貌請對方在星期五前補寄。",
+      "facts": ["缺少一份文件", "期限是星期五", "語氣需要明確但不命令"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最符合一般商務語氣？",
+          "options": [
+            { "text": "Could you please send the missing document by Friday?", "correct": true, "feedback": "Could you please 清楚表達請求，by Friday 表示最晚期限。" },
+            { "text": "You must send me the missing document before Friday.", "correct": false, "errorType": "tone", "feedback": "must 和 send me 過於命令式；before Friday 也可能被理解為不包含星期五。" },
+            { "text": "Please supply me the lack document until Friday.", "correct": false, "errorType": "unnatural", "feedback": "lack document 不自然，until 也不適合表示繳交期限。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入表示「最晚在星期五前」的介系詞。",
+          "before": "Could you please send the missing document",
+          "after": "Friday?",
+          "answers": ["by"],
+          "errorType": "usage",
+          "explanation": "by Friday 表示最晚不超過星期五。",
+          "incorrectFeedback": "表示截止期限時使用 by，不使用 until。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句禮貌請對方星期五前補寄文件。",
+        "target": "Could you please send the missing document by Friday?",
+        "accepted": ["Could you please send the missing document by Friday?", "Could you send the missing document by Friday, please?"],
+        "explanation": "請求、內容與期限都明確，語氣也不過度強硬。",
+        "commonMistakes": [
+          { "example": "Please send the missing document until Friday.", "errorType": "usage", "feedback": "截止期限應使用 by Friday。" }
+        ]
+      }
+    },
+    {
+      "id": "email-resend-attachment-01",
+      "mode": "email",
+      "category": "resend-attachment",
+      "title": "重寄附件",
+      "scenarioZh": "對方表示沒有看到附件。你重新附上檔案，並簡短告知對方。",
+      "facts": ["檔案已重新附上", "不責怪對方", "for your reference 可表示供參考"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句自然地告知附件已重寄？",
+          "options": [
+            { "text": "I have attached the file again for your reference.", "correct": true, "feedback": "attached the file again 清楚表示重新附檔。" },
+            { "text": "I resend attachment to you again.", "correct": false, "errorType": "grammar", "feedback": "attachment 前缺少冠詞，而且 resend 與 again 重複表意。" },
+            { "text": "Please find again the attachment.", "correct": false, "errorType": "word-order", "feedback": "again 放在這個位置不自然，也沒有清楚說明是重新附上。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "重組一句簡短的附件通知。",
+          "tokens": ["I have attached", "the file again", "for your reference."],
+          "explanation": "先說明動作，再放受詞與 again，最後補充用途。",
+          "incorrectFeedback": "again 通常放在受詞後方，比放在句首自然。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句告知已重新附上檔案。",
+        "target": "I have attached the file again for your reference.",
+        "accepted": ["I have attached the file again for your reference.", "I have reattached the file for your reference.", "Please find the file attached again for your reference."],
+        "explanation": "訊息直接，不需要解釋對方為什麼沒看到附件。",
+        "commonMistakes": [
+          { "example": "I resend attachment to you again.", "errorType": "grammar", "feedback": "使用 have attached the file again，並補上 the。" }
+        ]
+      }
+    },
+    {
+      "id": "email-request-update-01",
+      "mode": "email",
+      "category": "request-update",
+      "title": "詢問進度",
+      "scenarioZh": "你已提出一項請求，目前尚未收到後續消息。你要禮貌詢問最新進度。",
+      "facts": ["不假設對方延誤", "只詢問目前狀況", "使用 request 代表先前事項"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句中性且適合一般商務往來？",
+          "options": [
+            { "text": "Could you please provide an update on the request?", "correct": true, "feedback": "provide an update on 是自然的進度詢問搭配。" },
+            { "text": "Why haven't you finished the request?", "correct": false, "errorType": "tone", "feedback": "這句直接指責對方未完成，不適合作為一般進度詢問。" },
+            { "text": "Could you tell me the request progress?", "correct": false, "errorType": "unnatural", "feedback": "可以理解，但 an update on the request 更自然。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入與 update 搭配、表示「關於」的介系詞。",
+          "before": "Could you please provide an update",
+          "after": "the request?",
+          "answers": ["on"],
+          "errorType": "usage",
+          "explanation": "英文慣用搭配是 an update on something。",
+          "incorrectFeedback": "update 在此與 on 搭配。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句禮貌詢問目前進度。",
+        "target": "Could you please provide an update on the request?",
+        "accepted": ["Could you please provide an update on the request?", "Could you please give me an update on the request?", "May I ask for an update on the request?"],
+        "explanation": "這句不預設責任歸屬，適合一般追蹤。",
+        "commonMistakes": [
+          { "example": "Could you provide me the request progress?", "errorType": "unnatural", "feedback": "改用 provide an update on the request 會更自然。" }
+        ]
+      }
+    },
+    {
+      "id": "email-correct-information-01",
+      "mode": "email",
+      "category": "correct-information",
+      "title": "更正先前資訊",
+      "scenarioZh": "你先前寄出的會議時間有誤，需要清楚告知正確時間是下午兩點。",
+      "facts": ["需要明確指出正確資訊", "不需要長篇解釋", "正確時間：下午 2:00"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最清楚地引出更正？",
+          "options": [
+            { "text": "Please note that the correct meeting time is 2:00 p.m.", "correct": true, "feedback": "Please note that 能自然提示對方注意更正資訊。" },
+            { "text": "The meeting time should correct to 2:00 p.m.", "correct": false, "errorType": "grammar", "feedback": "should correct 缺少被動形式，而且整句結構不自然。" },
+            { "text": "I wrong the meeting time. It is 2:00 p.m.", "correct": false, "errorType": "grammar", "feedback": "wrong 不能在此直接作動詞使用。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "重組更正句。",
+          "tokens": ["Please note that", "the correct meeting time", "is 2:00 p.m."],
+          "explanation": "Please note that 後面接完整子句。",
+          "incorrectFeedback": "that 後方需要主詞與動詞完整的子句。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句告知正確會議時間是下午兩點。",
+        "target": "Please note that the correct meeting time is 2:00 p.m.",
+        "accepted": ["Please note that the correct meeting time is 2:00 p.m.", "Please note that the meeting time is 2:00 p.m.", "The correct meeting time is 2:00 p.m."],
+        "explanation": "先提示更正，再直接給出正確資訊，清楚而簡潔。",
+        "commonMistakes": [
+          { "example": "The meeting time should correct to 2:00 p.m.", "errorType": "grammar", "feedback": "直接使用 the correct meeting time is 2:00 p.m.。" }
+        ]
+      }
+    },
+    {
+      "id": "email-confirm-time-01",
+      "mode": "email",
+      "category": "confirm-time",
+      "title": "安排或確認時間",
+      "scenarioZh": "你提出星期二上午十點，想確認對方是否方便。",
+      "facts": ["候選時間：星期二上午 10:00", "詢問是否方便", "保留讓對方回覆的空間"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最自然地確認時間？",
+          "options": [
+            { "text": "Could you please confirm whether Tuesday at 10:00 a.m. works for you?", "correct": true, "feedback": "whether...works for you 是自然的時間確認方式。" },
+            { "text": "Please confirm Tuesday 10:00 a.m. is convenient or not.", "correct": false, "errorType": "word-order", "feedback": "直接把「是否方便」翻成 convenient or not，語序不自然。" },
+            { "text": "Can you attend Tuesday at 10:00 a.m.?", "correct": false, "errorType": "tone", "feedback": "不是錯句，但語氣較直接，也把情境限縮成出席。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入表示「是否」的連接詞。",
+          "before": "Could you please confirm",
+          "after": "Tuesday at 10:00 a.m. works for you?",
+          "answers": ["whether", "if"],
+          "errorType": "grammar",
+          "explanation": "whether 或 if 都能引導間接的是非問題。",
+          "incorrectFeedback": "confirm 後可用 whether 或 if 引導完整子句。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句確認星期二上午十點是否方便。",
+        "target": "Could you please confirm whether Tuesday at 10:00 a.m. works for you?",
+        "accepted": ["Could you please confirm whether Tuesday at 10:00 a.m. works for you?", "Could you please confirm if Tuesday at 10:00 a.m. works for you?", "Does Tuesday at 10:00 a.m. work for you?"],
+        "explanation": "時間與確認目的都完整，對方也能直接回答。",
+        "commonMistakes": [
+          { "example": "Please confirm Tuesday at 10:00 a.m. convenient or not.", "errorType": "word-order", "feedback": "使用 whether...works for you 組成完整子句。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-answer-call-01",
+      "mode": "phone",
+      "category": "answer-call",
+      "title": "接聽電話與開場",
+      "scenarioZh": "工作電話響起。你需要先問候、感謝來電，再詢問可以如何協助。",
+      "facts": ["目前是上午", "不知道來電者身分", "保持簡短清楚"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一組開場最完整？",
+          "options": [
+            { "text": "Good morning. Thank you for calling. How may I help you?", "correct": true, "feedback": "包含問候、感謝與協助問題，適合一般工作電話。" },
+            { "text": "Hello, what do you want?", "correct": false, "errorType": "tone", "feedback": "what do you want 過於直接，聽起來不耐煩。" },
+            { "text": "Good morning. How can I help?", "correct": false, "errorType": "unnatural", "feedback": "可以使用，但加上 Thank you for calling 更完整。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "依電話開場順序排列。",
+          "tokens": ["Good morning.", "Thank you for calling.", "How may I help you?"],
+          "explanation": "先問候，再感謝來電，最後詢問需求。",
+          "incorrectFeedback": "電話開場應先建立禮貌語境，再詢問對方需求。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫出一句完整的上午電話開場。",
+        "target": "Good morning. Thank you for calling. How may I help you?",
+        "accepted": ["Good morning. Thank you for calling. How may I help you?", "Good morning. Thank you for calling. How can I help you?"],
+        "explanation": "這套開場可以固定背熟，電話響起時直接使用。",
+        "commonMistakes": [
+          { "example": "Good morning. What can I help you?", "errorType": "grammar", "feedback": "應說 How can I help you，而不是 What can I help you。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-ask-identity-01",
+      "mode": "phone",
+      "category": "ask-name-company",
+      "title": "詢問姓名與公司",
+      "scenarioZh": "來電者尚未自我介紹。你需要禮貌詢問姓名與公司名稱。",
+      "facts": ["不知道姓名", "不知道公司", "避免直接說 Who are you"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最適合電話中詢問身分？",
+          "options": [
+            { "text": "May I have your name and company name, please?", "correct": true, "feedback": "May I have...please 是常見且禮貌的電話用語。" },
+            { "text": "Who are you and where are you from?", "correct": false, "errorType": "tone", "feedback": "語氣像質問，而且 where are you from 不等於公司名稱。" },
+            { "text": "Can you give me your name and your company?", "correct": false, "errorType": "unnatural", "feedback": "可以理解，但 May I have... 更符合電話接待語氣。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入電話中禮貌取得資訊的動詞。",
+          "before": "May I",
+          "after": "your name and company name, please?",
+          "answers": ["have"],
+          "errorType": "usage",
+          "explanation": "May I have... 是詢問姓名、電話等資訊的固定句型。",
+          "incorrectFeedback": "此處使用 have，不需要使用 know 或 get。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句禮貌詢問姓名與公司。",
+        "target": "May I have your name and company name, please?",
+        "accepted": ["May I have your name and company name, please?", "Could I have your name and company name, please?"],
+        "explanation": "可把這句當作固定電話句型，不必臨時組句。",
+        "commonMistakes": [
+          { "example": "Who are you and what is your company?", "errorType": "tone", "feedback": "改用 May I have... 可以避免質問感。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-ask-hold-01",
+      "mode": "phone",
+      "category": "ask-hold",
+      "title": "請對方稍候",
+      "scenarioZh": "你需要短暫查找資訊，想請來電者在線上稍候。",
+      "facts": ["只需稍候片刻", "先徵求對方同意", "不要直接命令 Wait"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最適合請對方稍候？",
+          "options": [
+            { "text": "Could you please hold for a moment?", "correct": true, "feedback": "hold for a moment 是標準電話用語。" },
+            { "text": "Wait a minute.", "correct": false, "errorType": "tone", "feedback": "命令語氣太直接；電話中應使用 could you please。" },
+            { "text": "Please wait me for a moment.", "correct": false, "errorType": "grammar", "feedback": "wait 不能直接接 me；電話情境使用 hold 更自然。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "重組請對方稍候的固定句。",
+          "tokens": ["Could you please", "hold", "for a moment?"],
+          "explanation": "Could you please 後接原形動詞 hold。",
+          "incorrectFeedback": "please 後面要接動詞原形。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句請來電者稍候片刻。",
+        "target": "Could you please hold for a moment?",
+        "accepted": ["Could you please hold for a moment?", "Would you mind holding for a moment?", "Please hold for a moment."],
+        "explanation": "這是能在腦袋空白時直接取用的固定救援句。",
+        "commonMistakes": [
+          { "example": "Please wait me for a moment.", "errorType": "grammar", "feedback": "電話中改用 hold for a moment。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-transfer-call-01",
+      "mode": "phone",
+      "category": "transfer-call",
+      "title": "轉接電話",
+      "scenarioZh": "你已確認對方需求，需要把電話轉給適合的人員。",
+      "facts": ["將進行轉接", "不指定真實部門", "告知下一步即可"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句清楚告知即將轉接？",
+          "options": [
+            { "text": "I'll transfer you to the appropriate person.", "correct": true, "feedback": "transfer you to 是正確搭配，appropriate person 保持情境通用。" },
+            { "text": "I transfer your phone to someone.", "correct": false, "errorType": "grammar", "feedback": "轉接的是來電者，不是對方的電話；也需要使用 will。" },
+            { "text": "I will let another person answer you.", "correct": false, "errorType": "unnatural", "feedback": "可以猜到意思，但不符合常見電話轉接用語。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入表示「轉接」的動詞。",
+          "before": "I'll",
+          "after": "you to the appropriate person.",
+          "answers": ["transfer"],
+          "errorType": "spelling",
+          "explanation": "transfer someone to... 表示把某人的電話轉接給另一方。",
+          "incorrectFeedback": "此處使用 transfer；注意拼字中間有兩個 r。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句告知來電者你將進行轉接。",
+        "target": "I'll transfer you to the appropriate person.",
+        "accepted": ["I'll transfer you to the appropriate person.", "I will transfer you to the appropriate person.", "Let me transfer you to the appropriate person."],
+        "explanation": "不需要臨時想部門名稱，也能清楚告知下一步。",
+        "commonMistakes": [
+          { "example": "I'll transfer your phone to another person.", "errorType": "usage", "feedback": "應說 transfer you，而不是 transfer your phone。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-unavailable-message-01",
+      "mode": "phone",
+      "category": "unavailable-message",
+      "title": "對方不在與詢問留言",
+      "scenarioZh": "來電者要找的人目前無法接聽。你需要說明狀況並詢問是否留言。",
+      "facts": ["對方目前無法接聽", "不透露原因", "提供留言選項"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句最完整且不透露多餘資訊？",
+          "options": [
+            { "text": "I'm sorry, they are unavailable at the moment. Would you like to leave a message?", "correct": true, "feedback": "unavailable 不透露原因，後面直接提供留言選項。" },
+            { "text": "They are not here. Do you have anything to say?", "correct": false, "errorType": "tone", "feedback": "語氣過於生硬，anything to say 也不像正式的留言詢問。" },
+            { "text": "They cannot answer you because they are busy.", "correct": false, "errorType": "tone", "feedback": "沒有必要猜測或透露無法接聽的原因。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "依序重組「目前不在＋是否留言」。",
+          "tokens": ["They are unavailable at the moment.", "Would you like", "to leave a message?"],
+          "explanation": "先交代狀況，再提出留言選項。",
+          "incorrectFeedback": "先說明無法接聽，再詢問留言，對方比較容易理解。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句說明目前無法接聽並詢問是否留言。",
+        "target": "I'm sorry, they are unavailable at the moment. Would you like to leave a message?",
+        "accepted": ["I'm sorry, they are unavailable at the moment. Would you like to leave a message?", "They are unavailable at the moment. Would you like to leave a message?"],
+        "explanation": "這句避免透露原因，同時讓通話能繼續往留言流程前進。",
+        "commonMistakes": [
+          { "example": "They are not here. Do you want to say something?", "errorType": "tone", "feedback": "改用 unavailable 與 leave a message，語氣會更專業。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-confirm-number-01",
+      "mode": "phone",
+      "category": "confirm-information",
+      "title": "確認電話與資訊",
+      "scenarioZh": "來電者提供聯絡電話。你需要在記錄後再次確認號碼。",
+      "facts": ["不放入真實電話號碼", "先提示要確認", "接著可逐位重複號碼"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句適合在重複號碼前使用？",
+          "options": [
+            { "text": "Let me confirm your phone number.", "correct": true, "feedback": "Let me confirm... 自然地提示接下來要核對資訊。" },
+            { "text": "I confirm again your phone.", "correct": false, "errorType": "word-order", "feedback": "again 的位置與 your phone 的用法都不自然。" },
+            { "text": "Tell me your number one more time.", "correct": false, "errorType": "tone", "feedback": "這是在要求對方重說，不是主動核對已記錄的內容。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入表示「確認、核對」的動詞。",
+          "before": "Let me",
+          "after": "your phone number.",
+          "answers": ["confirm"],
+          "errorType": "spelling",
+          "explanation": "confirm information 表示確認資訊是否正確。",
+          "incorrectFeedback": "此處使用 confirm。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句表示要確認來電者的電話號碼。",
+        "target": "Let me confirm your phone number.",
+        "accepted": ["Let me confirm your phone number.", "Let me confirm the phone number.", "May I confirm your phone number?"],
+        "explanation": "說完這句後，再逐位念出已記錄的號碼即可。",
+        "commonMistakes": [
+          { "example": "Let me check again your phone number.", "errorType": "word-order", "feedback": "若使用 again，應放在句尾；此處直接用 confirm 最簡潔。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-return-call-01",
+      "mode": "phone",
+      "category": "return-call",
+      "title": "告知會請對方回電",
+      "scenarioZh": "你已記下留言，需要告知來電者會請對方回電，但不承諾確切時間。",
+      "facts": ["留言已記錄", "會轉達回電需求", "不承諾何時回電"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "哪一句不會做出過度承諾？",
+          "options": [
+            { "text": "I'll ask them to return your call.", "correct": true, "feedback": "ask them to 表示你會轉達，但沒有替對方保證結果或時間。" },
+            { "text": "They will call you back immediately.", "correct": false, "errorType": "tone", "feedback": "除非已確認，否則不應替他人承諾立即回電。" },
+            { "text": "I will tell them call back to you.", "correct": false, "errorType": "grammar", "feedback": "tell 後需接 to call；return your call 或 call you back 更自然。" }
+          ]
+        },
+        {
+          "type": "order",
+          "promptZh": "重組不過度承諾的回電句。",
+          "tokens": ["I'll ask them", "to return", "your call."],
+          "explanation": "ask someone to do something 是固定結構。",
+          "incorrectFeedback": "ask them 後面使用 to 加動詞原形。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫一句告知會請對方回電。",
+        "target": "I'll ask them to return your call.",
+        "accepted": ["I'll ask them to return your call.", "I will ask them to return your call.", "I'll ask them to call you back."],
+        "explanation": "這句完成轉達承諾，但沒有替另一個人保證回電時間。",
+        "commonMistakes": [
+          { "example": "I will tell them call back to you.", "errorType": "grammar", "feedback": "使用 ask them to return your call。" }
+        ]
+      }
+    },
+    {
+      "id": "phone-ask-repeat-01",
+      "mode": "phone",
+      "category": "ask-repeat",
+      "title": "聽不清楚與救援句",
+      "scenarioZh": "你沒有聽清楚來電者剛才說的內容。你需要立即使用固定句，請對方重複。",
+      "facts": ["沒有聽清楚", "不需要假裝理解", "先說明再請對方重複"],
+      "steps": [
+        {
+          "type": "choice",
+          "promptZh": "腦袋空白時，哪一句最安全實用？",
+          "options": [
+            { "text": "I'm sorry, I didn't catch that. Could you please repeat it?", "correct": true, "feedback": "didn't catch that 是自然的沒聽清楚表達，後面直接提出請求。" },
+            { "text": "What? Say it again.", "correct": false, "errorType": "tone", "feedback": "過於直接，容易聽起來不耐煩。" },
+            { "text": "Sorry, my English is not good.", "correct": false, "errorType": "tone", "feedback": "不需要貶低自己的英文；直接說沒聽清楚更有效。" }
+          ]
+        },
+        {
+          "type": "fill",
+          "promptZh": "填入表示「沒聽清楚」的動詞。",
+          "before": "I'm sorry, I didn't",
+          "after": "that. Could you please repeat it?",
+          "answers": ["catch"],
+          "errorType": "usage",
+          "explanation": "I didn't catch that 是常見電話救援句。",
+          "incorrectFeedback": "此處使用 catch，表示沒有聽清楚或理解剛才的話。"
+        }
+      ],
+      "production": {
+        "promptZh": "寫出一句請對方重複的完整救援句。",
+        "target": "I'm sorry, I didn't catch that. Could you please repeat it?",
+        "accepted": ["I'm sorry, I didn't catch that. Could you please repeat it?", "Sorry, I didn't catch that. Could you please repeat it?", "I'm sorry, could you please repeat that?"],
+        "explanation": "這句值得整組背熟；卡住時不需要重新組合文法。",
+        "commonMistakes": [
+          { "example": "Sorry, I didn't listen clearly. Please say again.", "errorType": "unnatural", "feedback": "改用 I didn't catch that 與 repeat it 更自然。" }
+        ]
+      }
+    }
+  ]
+}
