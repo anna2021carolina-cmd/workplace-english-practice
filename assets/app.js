@@ -23,7 +23,7 @@
     itemIndex: 0,
     stepIndex: 0,
     stepState: {},
-    round: { correct: 0, mistakes: 0, completed: 0 },
+    round: { correct: 0, acceptable: 0, mistakes: 0, completed: 0 },
   };
 
   init();
@@ -133,7 +133,7 @@
     state.itemIndex = 0;
     state.stepIndex = 0;
     state.stepState = {};
-    state.round = { correct: 0, mistakes: 0, completed: 0 };
+    state.round = { correct: 0, acceptable: 0, mistakes: 0, completed: 0 };
     showScreen("practice-screen");
     renderPractice();
   }
@@ -201,12 +201,22 @@
       button.addEventListener("click", () => {
         const option = step.options[Number(button.dataset.optionIndex)];
         workspace.querySelectorAll("button").forEach((node) => (node.disabled = true));
-        button.classList.add(option.correct ? "correct" : "incorrect");
+        const isAcceptable = option.quality === "acceptable";
+        button.classList.add(option.correct ? "correct" : isAcceptable ? "acceptable" : "incorrect");
 
         if (option.correct) {
           state.round.correct += 1;
           recordAttempt(item, "choice", "correct", option.text, null);
           showFeedback("success", "選得很好", option.feedback || step.explanation || "這個句子最符合情境。", true);
+        } else if (isAcceptable) {
+          state.round.acceptable += 1;
+          recordAttempt(item, "choice", "acceptable", option.text, option.errorType || "suboptimal");
+          showFeedback(
+            "acceptable",
+            "可以使用，但不是最佳答案",
+            option.feedback || "這句英文可以使用，但有更貼合目前情境的說法。",
+            true,
+          );
         } else {
           state.round.mistakes += 1;
           recordMistake(item, option.errorType || "usage", option.feedback, option.text, "choice");
@@ -447,10 +457,12 @@
       <div class="summary-stat"><strong>${state.round.completed}</strong><span>完成情境</span></div>
       <div class="summary-stat"><strong>${state.round.correct}</strong><span>順利作答</span></div>
       <div class="summary-stat"><strong>${state.round.mistakes}</strong><span>值得再練</span></div>`;
-    document.querySelector("#summary-note").textContent =
-      state.round.mistakes > 0
-        ? "錯誤已留在本機錯題紀錄。重練不是倒退，而是把句子練成能在工作中直接叫出來。"
-        : "這一輪很穩定。可以換另一種模式，也可以再做一輪累積熟悉度。";
+    const acceptableNote = state.round.acceptable > 0
+      ? `另有 ${state.round.acceptable} 題是可以使用但不是最佳答案，已提供改進提醒，不會列入錯題。`
+      : "";
+    document.querySelector("#summary-note").textContent = state.round.mistakes > 0
+      ? `錯誤已留在本機錯題紀錄。重練不是倒退，而是把句子練成能在工作中直接叫出來。${acceptableNote}`
+      : acceptableNote || "這一輪很穩定。可以換另一種模式，也可以再做一輪累積熟悉度。";
     const continueButton = document.querySelector("#continue-mode");
     continueButton.textContent = `再練一輪 ${modeName}`;
     continueButton.onclick = () => startSession(state.mode);
@@ -699,6 +711,7 @@
       unnatural: "不自然但不一定錯",
       tone: "商務語氣問題",
       usage: "用字問題",
+      suboptimal: "可以使用，但不是最佳答案",
       "needs-review": "待檢視",
     };
     return labels[type] || "需要再確認";
