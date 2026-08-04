@@ -1,0 +1,10 @@
+{
+  "name": "workplace-english-practice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A personal, vibe-coded tool for practicing business emails and basic workplace phone calls.",
+  "scripts": {
+    "test": "node tests/validate.mjs"
+  },
+  "license": "MIT"
+}
